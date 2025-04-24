@@ -1,3 +1,5 @@
+# To implement semantic search using OpenSearch. The semantic search part is not yet complete.
+
 # OpenSearch 2.19.1 ML Model Installation Guide
 
 This guide provides step-by-step instructions for installing OpenSearch 2.19.1 with Docker Desktop on macOS, configuring the environment, and uploading/deploying a Machine Learning (ML) model using the ML Commons plugin. It includes troubleshooting tips for common issues encountered during the process.
@@ -43,33 +45,6 @@ This guide provides step-by-step instructions for installing OpenSearch 2.19.1 w
    - CPUs: 4 cores (minimum 2)
    - Swap: 1GB
 3. Click Apply & Restart
-
-### Step 3: Adjust Virtual Machine Settings
-
-OpenSearch requires `vm.max_map_count` to be at least 262144:
-
-1. Access Docker Desktop's virtual machine:
-   ```bash
-   docker run -it --privileged --pid=host justincormack/nsenter1
-   ```
-
-2. Set the parameter:
-   ```bash
-   sysctl -w vm.max_map_count=262144
-   ```
-
-3. Verify:
-   ```bash
-   sysctl vm.max_map_count
-   ```
-   Expected output: `vm.max_map_count = 262144`
-
-4. Exit:
-   ```bash
-   exit
-   ```
-
-> **Note**: This setting may reset on Docker Desktop restart. Reapply if needed.
 
 ## Starting OpenSearch
 
