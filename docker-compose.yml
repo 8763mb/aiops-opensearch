@@ -1,0 +1,46 @@
+version: '3'
+services:
+  opensearch-node1:
+    image: opensearchproject/opensearch:2.19.1
+    container_name: opensearch-node1
+    environment:
+      - cluster.name=opensearch-cluster
+      - node.name=opensearch-node1
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_INITIAL_ADMIN_PASSWORD}
+      - plugins.ml_commons.only_run_on_ml_node=false  # Allow ML model to run on a single node.
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - opensearch-data1:/usr/share/opensearch/data
+    ports:
+      - 9200:9200
+      - 9600:9600
+    networks:
+      - opensearch-net
+  opensearch-dashboards:
+    image: opensearchproject/opensearch-dashboards:2.19.1
+    container_name: opensearch-dashboards
+    ports:
+      - 5601:5601
+    expose:
+      - "5601"
+    environment:
+      - 'OPENSEARCH_HOSTS=["https://opensearch-node1:9200"]'
+      - ml_commons_dashboards.enabled=true  # Enable ML Model
+    networks:
+      - opensearch-net
+    depends_on:
+      - opensearch-node1
+volumes:
+  opensearch-data1:
+networks:
+  opensearch-net:
+    driver: bridge
