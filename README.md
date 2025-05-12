@@ -146,6 +146,9 @@ curl -XGET https://localhost:9200/_plugins/_ml/models/<model_id> -u 'admin:YourS
 
 Ensure status is `DEPLOYED`.
 
+<img width="1080" alt="image" src="https://github.com/user-attachments/assets/85039d7e-791e-41f2-a9db-10fe7db1beba" />
+
+
 ### Step 6: Test the Model
 
 Test the model with a text embedding prediction:
